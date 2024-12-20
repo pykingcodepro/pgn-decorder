@@ -1,6 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('node:path');
 const started = require('electron-squirrel-startup');
+const pgnParser = require('pgn-parser');
+const { ipcMain } = require('electron');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -29,6 +31,10 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+  ipcMain.handle('pgn-parser', (event, pgn)=> {
+    const parsed = pgnParser.parse(pgn);
+    return parsed;
+  });
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
