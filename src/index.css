@@ -5,3 +5,9 @@ body {
   max-width: 38rem;
   padding: 2rem;
 }
+
+textarea {
+  height: 272px;
+  width: 561px;
+  margin-top: 1rem;
+}

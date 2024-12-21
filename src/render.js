@@ -10,11 +10,24 @@ document.getElementById('btn').addEventListener('click', () => {
       const fileContent = event.target.result;
       console.log(fileContent); 
       const parsed = await electron.pgnParser(fileContent);
-      // const parsedString = JSON.stringify(parsed);
-      document.getElementById('decodedContent').innerText = parsed[0].result;
+      const parsedString = JSON.stringify(parsed, null, 2);
+      document.getElementById('decodedContent').value = parsedString;
     };
     reader.readAsText(file);
   } else {
     console.log('No file selected');
   }
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const copyText = document.getElementById('decodedContent');
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand('copy');
+  console.log('Copied the text: ' + copyText.value);
+});
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  document.getElementById('decodedContent').value = '';
+  document.getElementById('pgnFileInput').value = '';
 });
